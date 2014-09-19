@@ -50,5 +50,8 @@ train$activity <- factor(train$activity, levels=c("1", "2", "3", "4", "5", "6"),
 #convert to 
 train_df <- tbl_df(train)
 
+train_df <- select(train_df, subject, activity, contains("-mean"), contains("-std"), -contains("meanFreq"))
 
+grp_train <- group_by(train_df, subject, activity)
 
+summarise_each(grp_train, funs(mean))
