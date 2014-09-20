@@ -2,9 +2,13 @@ Data Dictionary
 ========
 
 
-###subject	{numeric}
+###subject {numeric}
 
 >Training and test subjects
+
+>>Test subjects --> 2, 4, 9, 10, 12, 13, 18, 20, 24
+
+>>Training subjects --> 1, 3, 5, 6, 7, 8, 11, 14, 15, 16, 17, 19, 21, 22, 23, 25, 26, 27, 28, 29, 30
 
 ###feature {factor}
 
