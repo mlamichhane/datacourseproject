@@ -1,4 +1,6 @@
 library(dplyr)
+library(tidyr)
+
 
 #First read the subject for test data
 test <- read.table("./UCI HAR Dataset/test/subject_test.txt", header =  FALSE, stringsAsFactors = FALSE)
@@ -31,13 +33,15 @@ train <- cbind(train, trainy, trainx)
 #bind the training and test dataset
 train <- rbind(train, test)
 
+
+
 #read the features to name the columns
 header <- read.table("./UCI HAR Dataset/features.txt", header =  FALSE, stringsAsFactors = FALSE)
 
 #convert the feature names to character vector
 header <- as.vector(header$V2)
 
-#since the above vector contains name of the feature, we need to append first 2 column names
+#since the above vector contains only name of the feature, we need to append first 2 column names
 #to match the header name list
 header <- append(header, c("subject", "activity"),0)
 
@@ -54,4 +58,6 @@ train_df <- select(train_df, subject, activity, contains("-mean"), contains("-st
 
 grp_train <- group_by(train_df, subject, activity)
 
-summarise_each(grp_train, funs(mean))
+sum_grp_train <- summarise_each(grp_train, funs(mean))
+
+tidy_data <- sum_grp_train%>%gather(feature, average_value, 3:68)%>%spread(activity, average_value)
